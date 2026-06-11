@@ -1,0 +1,83 @@
+Development Environment:
+
+I did this project on Ubuntu 24 running inside VMware on my personal laptop. Setting up the environment took some time because I had to install many tools I had not used before.
+
+Tools I Used:
+Renode
+I used Renode version 1.16 to emulate the SiFive FE310 RISC-V microcontroller. I had never used Renode before this project. I learned how to write .repl platform description files and .resc scripts to load and run firmware.
+
+RISC-V
+This is the cross compiler I used to compile C code for RISC-V. I installed it from ubuntu package manager. The hardest part was figuring out the correct flags for rv32imac architecture and linking with picolibc.
+
+Picolibc
+
+I needed a C standard library for bare metal RISC-V. I found that picolibc was already available as a package for riscv64-unknown-elf on Ubuntu. I had to manually point the compiler to the include and library paths.
+
+Wasm3
+
+This is the WebAssembly runtime I embedded into the firmware. I cloned it from GitHub and compiled it as part of the firmware. Learning how to use the Wasm3 API to load and call WASM functions took some time reading the documentation and examples.
+
+ChatGPT (chat.openai.com) 
+
+used for code suggestions and debugging help
+
+How I Used AI Assistance:
+I used ChatGPT mainly as a search engine replacement. When I got an error I did not understand I searched for it and also asked ChatGPT to explain what it means. I also used it to understand concepts like how WebAssembly imports and exports work and what a WASM runtime is.
+
+
+ For Understanding Concepts:
+ 
+I asked questions like:
+- what is the difference between running WASM on host vs on MCU"
+- how does Wasm3 work on bare metal"
+- what is BSS section in embedded C"
+- how does picolibc work with riscv gcc"
+
+
+These helped me understand the theory before writing code.
+ For Debugging
+When I got errors I searched them online and sometimes asked AI to help explain. For example:
+
+- type sig index out of bounds  - searched this error, found it relates to WASM section parsing
+- undefined reference to _exit - learned about bare metal stubs
+- memory allocation failed - learned about heap size configuration in Wasm3
+- BSS not being zeroed - learned about startup code and crt0
+ For Code
+For parts I was unsure about like the linker script and crt0.S startup assembly I looked at examples online and adapted them for this project.
+Prompts I Used
+Some example questions I asked:
+how to compile C to wasm32 using clang on ubuntu
+wasm3 bare metal example for embedded risc-v
+what does type sig index out of bounds mean in wasm3
+how to zero bss section in risc-v assembly crt0
+
+picolibc with riscv64-unknown-elf-gcc nostdlib
+
+renode load srec file command
+
+ What Parts AI Helped With
+ Part | AI Help Level:
+
+ Understanding assignment requirements | High 
+ Architecture design | Medium 
+Writing main.c Wasm3 loader | Medium 
+ Debugging build errors | High 
+ Writing crt0.S | Low (mostly from examples) 
+ Linker script | Low (adapted from examples) |
+ server.py | Medium |
+ Running Renode commands | Low 
+
+What I Did Myself:
+
+- Set up the development environment on VMware Ubuntu
+- Ran all terminal commands myself
+- Read and understood each error message
+- Made decisions about which approach to try
+- Tested everything in Renode
+- Organized the project structure
+- Wrote this documentation
+
+Reflection
+
+This project taught me a lot about embedded systems, WebAssembly, and bare metal programming. It was difficult and took many hours of debugging. AI tools helped me when I was stuck but I made sure to understand each solution rather than just copying it blindly.
+
