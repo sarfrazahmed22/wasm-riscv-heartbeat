@@ -1,0 +1,6 @@
+mach create "fe310"
+machine LoadPlatformDescription @/home/sarfraz/riscv-heartbeat/renode/fe310_bigram.repl
+sysbus LoadSRecord @/home/sarfraz/riscv-heartbeat/firmware/heartbeat.srec
+showAnalyzer uart
+cpu PC 0x20010000
+start

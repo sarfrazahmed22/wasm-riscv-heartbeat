@@ -1,0 +1,4 @@
+riscv64-unknown-elf-gcc -march=rv32imac -mabi=ilp32 -mcmodel=medany -O2 -nostdlib -fno-builtin -I/usr/lib/picolibc/riscv64-unknown-elf/include -Iwasm/wasm3/source -Iwasm -Dd_m3MaxFunctionStackHeight=512 -Dd_m3FixedHeap=131072 -T linker.ld -o heartbeat.elf crt0.S main.c stubs.c wasm/wasm3/source/m3_env.c wasm/wasm3/source/m3_parse.c wasm/wasm3/source/m3_compile.c wasm/wasm3/source/m3_exec.c wasm/wasm3/source/m3_function.c wasm/wasm3/source/m3_module.c wasm/wasm3/source/m3_bind.c wasm/wasm3/source/m3_code.c wasm/wasm3/source/m3_core.c wasm/wasm3/source/m3_info.c \
+    -L/usr/lib/picolibc/riscv64-unknown-elf/lib/rv32imac/ilp32 \
+    -Wl,--start-group -lc -lgcc -Wl,--end-group \
+    -Wl,--undefined=_exit

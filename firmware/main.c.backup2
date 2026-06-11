@@ -1,0 +1,37 @@
+#define UART0_TXDATA (*(volatile unsigned int*)0x10013000)
+#define UART0_TXCTRL (*(volatile unsigned int*)0x10013008)
+
+void uart_init()
+{
+    UART0_TXCTRL = 1;
+}
+
+void uart_putc(char c)
+{
+    while (UART0_TXDATA & 0x80000000);
+    UART0_TXDATA = c;
+}
+
+void uart_print(const char *s)
+{
+    while (*s)
+    {
+        uart_putc(*s++);
+    }
+}
+
+void delay()
+{
+    for (volatile int i = 0; i < 500000; i++);
+}
+
+void _start()
+{
+    uart_init();
+
+    while (1)
+    {
+        uart_print("HEARTBEAT\r\n");
+        delay();
+    }
+}
