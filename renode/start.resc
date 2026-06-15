@@ -1,6 +1,10 @@
 mach create "fe310"
-machine LoadPlatformDescription @/home/sarfraz/riscv-heartbeat/renode/fe310_bigram.repl
-sysbus LoadSRecord @/home/sarfraz/riscv-heartbeat/firmware/heartbeat.srec
+machine LoadPlatformDescription @renode/fe310_bigram.repl
+sysbus LoadSRecord @firmware/heartbeat.srec
+
+emulation CreateServerSocketTerminal 4321 "uart_term"
+connector Connect sysbus.uart uart_term
+
 showAnalyzer uart
 cpu PC 0x20010000
 start
